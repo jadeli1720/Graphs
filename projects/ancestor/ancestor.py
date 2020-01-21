@@ -63,43 +63,6 @@ PLAN:
 
 from util import  Stack, Graph 
 
-def earliest_ancestor(ancestors, starting_node):
-    print("ancestors",ancestors)
-    print("starting node", starting_node)
-    # Create a stack 
-    stack = Stack()
-    # Put the starting point in a list to use as our path
-    stack.push([starting_node])
-    # Make a set to keep track of where we have been
-    visited = set()
-
-    # While there is stuff in the stack
-    while stack.size() > 0:
-        # Pop the first item
-        path = stack.pop()
-        print("path", path)
-        # vertex = last item in the path
-        node = path[-1]
-        print("node", node)
-
-        # If not visited
-        if node not in visited:
-            # If the ancestors is in our path
-            if node == ancestors:
-                return path
-            # Add to visited
-            visited.add(node)
-
-            # For each edge in the item
-            for next_node in Graph.get_neighbors(node):
-                print("for each", Graph.get_neighbors(node))
-                new_path = list(path)
-                new_path.append(next_node)
-                stack.push(new_path)
-
-ancestor = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
-# print(earliest_ancestor(ancestor, 6))
-
 graph = Graph()
 
 graph.add_vertex(1)
@@ -124,6 +87,45 @@ graph.add_edge(8, 9)
 graph.add_edge(11, 8)
 graph.add_edge(10, 1)
 
-print("printing graph",graph.vertices)
+def earliest_ancestor(ancestors, starting_node):
+    # Create a stack 
+    stack = Stack()
+    # Put the starting point in a list to use as our path
+    stack.push([starting_node])
+    # Make a set to keep track of where we have been
+    visited = set()
 
-print("get neighbors", graph.get_neighbors(6))
+    # While there is stuff in the stack
+    while stack.size() > 0:
+        # Pop the first item
+        path = stack.pop()
+        print("path", path)
+        # vertex = last item in the path
+        node = path[-1]
+        print("node", node)
+
+        # If not visited
+        if node not in visited:
+            # If the ancestors is in our path
+            if node == ancestors:
+                return node
+            # Add to visited
+            visited.add(node)
+            # print("visited node", visited)
+            # print("get neighbors", graph.get_neighbors(6))
+
+            # For each edge in the item
+            for next_node in graph.get_neighbors(node):
+                # print("for each", Graph.get_neighbors(node))
+                new_path = list(path)
+                new_path.append(next_node)
+                stack.push(new_path)
+
+
+
+
+# print("printing graph",graph.vertices)
+
+# print("get neighbors", graph.get_neighbors(6))
+
+print("function call",earliest_ancestor(10, 6))
