@@ -1,7 +1,7 @@
 """
 Simple graph implementation
 """
-from util import Stack, Queue  # These may come in handy
+from util import Queue, Stack  # These may come in handy
 
 class Graph:
 
@@ -40,29 +40,39 @@ class Graph:
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        # Create a queue/stack as appropriate
+        # Create a queue/queue as appropriate
+        queue = Queue()
         # Put the starting point in that
+        queue.enqueue(starting_vertex)
         # Make a set to keep track of where we have been
-        # While there is stuff in the queue/stack
+        visited = set()
+        # While there is stuff in the queue/queue
+        while queue.size() > 0:
             # Pop the first item
+            vertex = queue.dequeue()
             # If not visited
+            if vertex not in visited:
                 # DO THE THING!
+                print(vertex)
                 # Add to visited
+                visited.add(vertex)
                 # For each edge in the item
-                    # Add that edge to the queue/stack
+                for next_vert in self.get_neighbors(vertex):
+                    # Add that edge to the queue/queue
+                    queue.enqueue(next_vert)
 
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        # Create a queue/stack as appropriate
+        # Create a queue/queue as appropriate
         stack = Stack()
         # Put the starting point in that
         stack.push(starting_vertex)
         # Make a set to keep track of where we have been
         visited = set()
-        # While there is stuff in the queue/stack
+        # While there is stuff in the queue/queue
         while stack.size() > 0:
             # Pop the first item
             vertex = stack.pop()
@@ -74,7 +84,7 @@ class Graph:
                 visited.add(vertex)
                 # For each edge in the item
                 for next_vert in self.get_neighbors(vertex):
-                    # Add that edge to the queue/stack
+                    # Add that edge to the queue/queue
                     stack.push(next_vert)
 
     def dft_recursive(self, starting_vertex):
