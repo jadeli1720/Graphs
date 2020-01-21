@@ -45,7 +45,7 @@ class Graph:
         If both exist, add a connection from v1 to v2
         """
         if v1 in self.vertices and v2 in self.vertices:
-            self.vertices[v1].add(v2)
+            self.vertices[v2].add(v1)
         else:
             # Python builtin exception --> 
             raise IndexError("That vertex does not exits!")
