@@ -63,6 +63,7 @@ PLAN:
 
 from util import  Stack, Graph 
 
+# instantianting the ancestor graph
 graph = Graph()
 
 graph.add_vertex(1)
@@ -111,9 +112,6 @@ def earliest_ancestor(ancestors, starting_node):
                 return node
             # Add to visited
             visited.add(node)
-            # print("visited node", visited)
-            # print("get neighbors", graph.get_neighbors(6))
-
             # For each edge in the item
             for next_node in graph.get_neighbors(node):
                 # print("for each", Graph.get_neighbors(node))

@@ -45,6 +45,7 @@ class Graph:
         If both exist, add a connection from v1 to v2
         """
         if v1 in self.vertices and v2 in self.vertices:
+            # has to switch v1 and v2 so that the edge would move upwards
             self.vertices[v2].add(v1)
         else:
             # Python builtin exception --> 
