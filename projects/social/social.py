@@ -1,12 +1,19 @@
+import random
+
 class User:
     def __init__(self, name):
         self.name = name
+    # def __repr__(self):
+    #     self.name
 
 class SocialGraph:
     def __init__(self):
         self.last_id = 0
         self.users = {}
         self.friendships = {}
+
+    def __repr__(self):
+        f"{self.users}"
 
     def add_friendship(self, user_id, friend_id):
         """
@@ -17,6 +24,7 @@ class SocialGraph:
         elif friend_id in self.friendships[user_id] or user_id in self.friendships[friend_id]:
             print("WARNING: Friendship already exists")
         else:
+            # This makes the two way connection between friends 
             self.friendships[user_id].add(friend_id)
             self.friendships[friend_id].add(user_id)
 
@@ -46,8 +54,14 @@ class SocialGraph:
         self.friendships = {}
         # !!!! IMPLEMENT ME
 
-        # Add users
+        print("num-users", num_users)
+        print("average friends", avg_friendships)
 
+        # Add users --> 1 though 10 to generate the users
+        # Can we use add_vertex to do this
+        
+        print("Adding users" ,self.add_user(num_users) )
+        print("User dictionary", self.users)
         # Create friendships
 
     def get_all_social_paths(self, user_id): #BFS
@@ -68,7 +82,18 @@ class SocialGraph:
 
 if __name__ == '__main__':
     sg = SocialGraph()
-    sg.populate_graph(10, 2)
-    print(sg.friendships)
+    sg.populate_graph(10, 2) # Creates 10 users with an average of 2 friends each at the least. You and your friend
+    print("friendships",sg.friendships)
+
+#    User_id  ________the friends user 1 is connected to generated randomly 
+#      |   ___|___   
+#      v   |      |
+    # {1: {8, 10, 5}, 2: {10, 5, 7}, 3: {4}, 4: {9, 3}, 5: {8, 1, 2}, 6: {10}, 7: {2}, 8: {1, 5}, 9: {4}, 10: {1, 2, 6}} --these are also sets
+
     connections = sg.get_all_social_paths(1)
-    print(connections)
+    print("connections", connections)
+
+#                                  10 connects user 1 and user 2: 1 degree of seperation 
+#                                                      |     
+#                                                      v                   
+#   {1: [1], 8: [1, 8], 10: [1, 10], 5: [1, 5], 2: [1, 10, 2], 6: [1, 10, 6], 7: [1, 10, 2, 7]}
