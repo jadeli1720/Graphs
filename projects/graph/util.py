@@ -1,5 +1,6 @@
 
 # Note: This Queue class is sub-optimal. Why?
+# Because poping is O(n) and link vs linked list
 class Queue():
     def __init__(self):
         self.queue = []
