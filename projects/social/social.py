@@ -10,7 +10,7 @@ class SocialGraph:
 
     def add_friendship(self, user_id, friend_id):
         """
-        Creates a bi-directional friendship
+        Creates a bi-directional friendship --> facebook
         """
         if user_id == friend_id:
             print("WARNING: You cannot be friends with yourself")
@@ -37,6 +37,8 @@ class SocialGraph:
         between those users.
 
         The number of users must be greater than the average number of friendships.
+
+        import random
         """
         # Reset graph
         self.last_id = 0
@@ -48,14 +50,16 @@ class SocialGraph:
 
         # Create friendships
 
-    def get_all_social_paths(self, user_id):
+    def get_all_social_paths(self, user_id): #BFS
         """
         Takes a user's user_id as an argument
+
 
         Returns a dictionary containing every user in that user's
         extended network with the shortest friendship path between them.
 
         The key is the friend's ID and the value is the path.
+        measure distance between you and your friends
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
