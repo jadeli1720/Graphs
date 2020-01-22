@@ -77,32 +77,40 @@ def earliest_ancestor(ancestors, starting_node):
 
     for ancestor in ancestors:
         ancestorTree.add_edge(ancestor[1], ancestor[0])
-    # print("neighbors",ancestorTree.get_neighbors(6))
     # print("Tree", ancestorTree.vertices)
     
-    # To use to check the length
+    # default length to check the length of path list against
     longest_path = 1
-    # storing the last node
+    # counter for storing storing the last node
     last_node = 0
+    # passing the vertices by reference
     ancestor_vert = ancestorTree.vertices
     
+    # Iterate through the vertices of the ancestorTree
     for i in ancestor_vert:
-        # i = individual node
-        # print("depth first",ancestorTree.dfs(starting_node, i), "\n")
-        path = ancestorTree.dfs(starting_node, i) #returns a list of nodes
-        # print("path loop", path)
+        # i = individual nodes/vertices added using add_vert()
+        # returns a list of nodes and sets the list to the variable path
+        path = ancestorTree.dfs(starting_node, i) 
+        # print("path list loop", path)
+        
+        # If path is not = to None and the length of the path list in greater that longest_path which defaults to the value integer 1
         if path is not None and len(path) > longest_path :
+                # set longest_path = length of the path
                 longest_path = len(path)
                 print("longest_path", longest_path)
+                # last node is = to last node/vertice of the longest_path
                 last_node = i
                 print("last_node", last_node)
+        # I was missing that longest_path defaults to 1.
+        # If path list is empty and longest_path is set to default of 1
         elif not path and longest_path == 1:
-            print("empty", path)
-            print("elif path", longest_path)
+            # print("empty", path)
+            # print("elif path", longest_path)
+            # set last_node to -1
             last_node = -1
     
     # print("Out of for loop", last_node)
     return last_node
 
 
-print("function", earliest_ancestor(ancestor_data, 9))
+print("function", earliest_ancestor(ancestor_data, 6))
