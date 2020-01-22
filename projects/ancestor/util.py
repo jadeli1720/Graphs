@@ -45,8 +45,8 @@ class Graph:
         If both exist, add a connection from v1 to v2
         """
         if v1 in self.vertices and v2 in self.vertices:
-            # has to switch v1 and v2 so that the edge would move upwards
-            self.vertices[v2].add(v1)
+           
+            self.vertices[v1].add(v2)
         else:
             # Python builtin exception --> 
             raise IndexError("That vertex does not exits!")
@@ -57,3 +57,37 @@ class Graph:
         """
         # Need to check if the bottom code is correct.
         return self.vertices[vertex_id]
+
+    def dfs(self, starting_vertex, destination_vertex):
+        """
+        Return a list containing a path from
+        starting_vertex to destination_vertex in
+        depth-first order.
+        """
+        # Create a queue/stack as appropriate
+        stack = Stack()
+        # Put the starting point in that
+        # Enstack a list to use as our path
+        stack.push([starting_vertex])
+        # Make a set to keep track of where we have been
+        visited = set()
+        # While there is stuff in the stack/queue
+        while stack.size() > 0:
+            # Pop the first item
+            path = stack.pop()
+            # vertex = last item in the path
+            vertex = path[-1]
+            # If not visited
+            if vertex not in visited:
+                # If is the destination vertex in our path
+                if vertex == destination_vertex:
+                    # DO THE THING!
+                    return  path #possibly return the thing
+                # Add to visited
+                visited.add(vertex)
+                # For each edge in the item
+                for next_vert in self.get_neighbors(vertex):
+                    # Copy path to avoid pass by reference bug instead of passing the value. You are just copying over the original
+                    new_path = list(path) # Makes a copy of path rather than reference
+                    new_path.append(next_vert)
+                    stack.push(new_path)
