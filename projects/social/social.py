@@ -24,7 +24,7 @@ class SocialGraph:
         elif friend_id in self.friendships[user_id] or user_id in self.friendships[friend_id]:
             print("WARNING: Friendship already exists")
         else:
-            # This makes the two way connection between friends 
+            # This makes the two way connection between friends -> bi-directional
             self.friendships[user_id].add(friend_id)
             self.friendships[friend_id].add(user_id)
 
@@ -34,7 +34,7 @@ class SocialGraph:
         """
         self.last_id += 1  # automatically increment the ID to assign the new user
         self.users[self.last_id] = User(name)
-        self.friendships[self.last_id] = set()
+        self.friendships[self.last_id] = set() #--> adjacency List
 
     def populate_graph(self, num_users, avg_friendships):
         """
@@ -58,16 +58,21 @@ class SocialGraph:
         print("average friends", avg_friendships)
 
         # Add users --> 1 though 10 to generate the users
-        # Can we use add_vertex to do this
-        
-        print("Adding users" ,self.add_user(num_users) )
-        print("User dictionary", self.users)
-        # Create friendships
+        # Iterate: ran
+        for n in range(0, int(num_users) ):
+            self.add_user(f"User: {n}")
+        # print("Adding users" ,self.add_user(num_users) )
+        # print("User dictionary", self.users)
+
+        # Create friendships --> randomly --> adjacency list total of 20 friends divided between the 10 users. Some will have none, some 2, some 4
+
+
+
+
 
     def get_all_social_paths(self, user_id): #BFS
         """
         Takes a user's user_id as an argument
-
 
         Returns a dictionary containing every user in that user's
         extended network with the shortest friendship path between them.
@@ -86,7 +91,7 @@ if __name__ == '__main__':
     print("friendships",sg.friendships)
 
 #    User_id  ________the friends user 1 is connected to generated randomly 
-#      |   ___|___   
+#      |    ___|___   
 #      v   |      |
     # {1: {8, 10, 5}, 2: {10, 5, 7}, 3: {4}, 4: {9, 3}, 5: {8, 1, 2}, 6: {10}, 7: {2}, 8: {1, 5}, 9: {4}, 10: {1, 2, 6}} --these are also sets
 
