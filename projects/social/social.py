@@ -3,8 +3,8 @@ import random
 class User:
     def __init__(self, name):
         self.name = name
-    # def __repr__(self):
-    #     self.name
+    def __repr__(self):
+        return self.name
 
 class SocialGraph:
     def __init__(self):
@@ -58,14 +58,29 @@ class SocialGraph:
         print("average friends", avg_friendships)
 
         # Add users --> 1 though 10 to generate the users
-        # Iterate: ran
+        # Iterate: range from and including 0 to int(num_users)
         for n in range(0, int(num_users) ):
+            # create user up to num_users
             self.add_user(f"User: {n}")
         # print("Adding users" ,self.add_user(num_users) )
-        # print("User dictionary", self.users)
 
-        # Create friendships --> randomly --> adjacency list total of 20 friends divided between the 10 users. Some will have none, some 2, some 4
+        # Create friendships --> total_friendships = avg_friendships * num_users
+        possible_friendships = []
+        # Create a list with all possible friendship combinations, 
+        for user_id in self.users:
+            for friend_id in range(user_id + 1, self.last_id + 1):
+                possible_friendships.append((user_id, friend_id))
 
+        
+        # shuffle the list, 
+        random.shuffle(possible_friendships)
+        # print('possible friendships:', possible_friendships)
+
+        # then grab the first N elements from the list.
+        # Number of times to call add_friendship = avg_friendships * num_users/ 2
+        for i in range(num_users * avg_friendships // 2):
+            friendship = possible_friendships[i]
+            self.add_friendship(friendship[0], friendship[1])
 
 
 
@@ -88,6 +103,7 @@ class SocialGraph:
 if __name__ == '__main__':
     sg = SocialGraph()
     sg.populate_graph(10, 2) # Creates 10 users with an average of 2 friends each at the least. You and your friend
+    print("--------------")
     print("friendships",sg.friendships)
 
 #    User_id  ________the friends user 1 is connected to generated randomly 
@@ -96,6 +112,7 @@ if __name__ == '__main__':
     # {1: {8, 10, 5}, 2: {10, 5, 7}, 3: {4}, 4: {9, 3}, 5: {8, 1, 2}, 6: {10}, 7: {2}, 8: {1, 5}, 9: {4}, 10: {1, 2, 6}} --these are also sets
 
     connections = sg.get_all_social_paths(1)
+    print("--------------")
     print("connections", connections)
 
 #                                  10 connects user 1 and user 2: 1 degree of seperation 
