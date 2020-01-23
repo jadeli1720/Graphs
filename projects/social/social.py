@@ -1,4 +1,5 @@
 import random
+from util import Queue
 
 class User:
     def __init__(self, name):
@@ -53,9 +54,7 @@ class SocialGraph:
         self.users = {}
         self.friendships = {}
         # !!!! IMPLEMENT ME
-
-        print("num-users", num_users)
-        print("average friends", avg_friendships)
+        
 
         # Add users --> 1 though 10 to generate the users
         # Iterate: range from and including 0 to int(num_users)
@@ -70,19 +69,17 @@ class SocialGraph:
         for user_id in self.users:
             for friend_id in range(user_id + 1, self.last_id + 1):
                 possible_friendships.append((user_id, friend_id))
-
+        # print('possible friendships:', possible_friendships, "\n")
         
         # shuffle the list, 
         random.shuffle(possible_friendships)
-        # print('possible friendships:', possible_friendships)
+        # print('poss-friend shuffle:', possible_friendships, "\n")
 
         # then grab the first N elements from the list.
         # Number of times to call add_friendship = avg_friendships * num_users/ 2
         for i in range(num_users * avg_friendships // 2):
             friendship = possible_friendships[i]
             self.add_friendship(friendship[0], friendship[1])
-
-
 
 
     def get_all_social_paths(self, user_id): #BFS
@@ -95,8 +92,46 @@ class SocialGraph:
         The key is the friend's ID and the value is the path.
         measure distance between you and your friends
         """
+        # print("User ID", user_id)
+        
         visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
+
+        q = Queue()
+        q.enqueue([user_id])
+        # print("User ID", user_id)
+
+        # While there is stuff in the queue
+        while q.size() > 0:
+            # Pop the first item in the path
+            path = q.dequeue()
+            # user = last item in the path
+            user = path[-1]
+            # print('User Id in path', user)
+
+            # if not visited:
+            if user not in visited:
+                # add user to the visited dictionary as a list = path
+                visited[user] = path
+                # print("If in visited dictionary", visited)
+                
+                # If user_id is not in self. friendships dictionary
+                if user_id not in self.friendships:
+                    # print('user id not in friendships', self.friendships)
+                    # return visited dictionary
+                    return visited
+                
+                # for each friend in self.friendship(user id in path)
+                for friend in self.friendships[user]:
+                    # copy the values of path to path_copy variable
+                    path_copy = path.copy()
+                    # print('path copy', path_copy)
+
+                    # append the friend to the path_copy
+                    path_copy.append(friend)
+                    # print("Appending friends to path_copy", path_copy)
+                    # insert the path_copy to the Queue()
+                    q.enqueue(path_copy)
+
         return visited
 
 
@@ -111,7 +146,7 @@ if __name__ == '__main__':
 #      v   |      |
     # {1: {8, 10, 5}, 2: {10, 5, 7}, 3: {4}, 4: {9, 3}, 5: {8, 1, 2}, 6: {10}, 7: {2}, 8: {1, 5}, 9: {4}, 10: {1, 2, 6}} --these are also sets
 
-    connections = sg.get_all_social_paths(1)
+    connections = sg.get_all_social_paths(3)
     print("--------------")
     print("connections", connections)
 
