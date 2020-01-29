@@ -15,6 +15,7 @@ It will be easier to build your extended social network if you have users to tes
 >>> sg.populate_graph(10, 2)  # Creates 10 users with an average of 2 friends each
 >>> print(sg.friendships)
 {1: {8, 10, 5}, 2: {10, 5, 7}, 3: {4}, 4: {9, 3}, 5: {8, 1, 2}, 6: {10}, 7: {2}, 8: {1, 5}, 9: {4}, 10: {1, 2, 6}}
+
 >>> sg = SocialGraph()
 >>> sg.populate_graph(10, 2)
 >>> print(sg.friendships)
@@ -34,7 +35,11 @@ Now that you have a graph full of users and friendships, you can crawl through t
 >>> sg = SocialGraph()
 >>> sg.populate_graph(10, 2)
 >>> print(sg.friendships)
+
+{user:id{friend_verts, friend_verts, friend_verts}} ==> connections
+
 {1: {8, 10, 5}, 2: {10, 5, 7}, 3: {4}, 4: {9, 3}, 5: {8, 1, 2}, 6: {10}, 7: {2}, 8: {1, 5}, 9: {4}, 10: {1, 2, 6}}
+
 >>> connections = sg.get_all_social_paths(1)
 >>> print(connections)
 {1: [1], 8: [1, 8], 10: [1, 10], 5: [1, 5], 2: [1, 10, 2], 6: [1, 10, 6], 7: [1, 10, 2, 7]}
@@ -47,6 +52,14 @@ Note that in this sample, Users 3, 4 and 9 are not in User 1's extended social n
 ## 3. Questions
 
 1. To create 100 users with an average of 10 friends each, how many times would you need to call `add_friendship()`? Why?
+
+100 users, avg 10 friendships each
+avg_friendships = total_friendships /num_users
+2 = total_friendships/ 10 users ==> total_friendships = 20
+total_friendships = avg_friendships * num_users
+
+10 = total_friendships/100 users ==> total_friendships = 1000
+Need to call `add_friendship()` 1000 times
 
 2. If you create 1000 users with an average of 5 random friends each, what percentage of other users will be in a particular user's extended social network? What is the average degree of separation between a user and those in his/her extended network?
 

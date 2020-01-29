@@ -41,6 +41,7 @@ class Graph:
         beginning from starting_vertex.
         """
         # Create a stack/queue as appropriate
+        # using a queue because its first-in, first out
         queue = Queue()
         # Put the starting point in that
         queue.enqueue(starting_vertex)
